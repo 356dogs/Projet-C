@@ -101,6 +101,32 @@ void soustraction(int *score)
     }
 }
 
+void choixtables()
+{
+    int n; // largeur de la table
+    
+    printf("Vous avez choisi les tables des multiplications.\nSur quelle table voulez-vous travailler (entrez la valeur maximale. Exemple : 10 pour une table de 1 à 10)\t");
+    scanf("%d", &n);
+
+    // Affichage de l'en-tête
+    printf("\n   ");
+    for (int i = 1; i <= n; i++)
+    {
+        printf("%4d", i);
+    }
+    printf("\n");
+
+    // Affichage des lignes de la table
+    for (int i = 1; i <= n; i++)
+    {
+        printf("%2d ", i); // Affichage de l'indice de ligne
+        for (int j = 1; j <= n; j++)
+        {
+            printf("%4d", i * j); // Affichage du produit
+        }
+        printf("\n");
+    }
+}
 
 int main()
 {
@@ -124,7 +150,7 @@ int main()
                 multiplication(&score);
                 break;
             case 4:
-                printf("Vous avez choisi les tables des multiplications.\n");
+                choixtables();
                 break;
             case 5:
                 division(&score);
