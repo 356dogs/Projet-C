@@ -14,6 +14,7 @@ void addition(int *score)
     int b = rand() % 101; // nombre aléatoire entre 0 et 100
     int resultat = a + b;
     int reponse;
+    int essaie = 3; // 3 essaie
 
     printf("\nAddition :\n%d + %d = ?\nEntrer le résultat\t", a, b);
     scanf("%d", &reponse);
@@ -26,7 +27,11 @@ void addition(int *score)
     }
     else
     {
+        essaie--;
+        if essaie ==
         printf("Désolé, la bonne réponse est %d.\n\n", resultat);
+
+
     }
 }
 
@@ -105,7 +110,7 @@ void choixtables(int *score)
 {
     int n; // largeur de la table
     int reponse; // réponse de l'utilisateur
-    
+
     printf("Vous avez choisi les tables des multiplications.\nSur quelle table voulez-vous travailler (entrez la valeur maximale. Exemple : 10 pour une table de 1 à 10)\t");
     scanf("%d", &n);
 
@@ -127,10 +132,10 @@ void choixtables(int *score)
         }
         printf("\n");
     }
-    printf("Voulez vous remplir une colonne par vous même ? (1=Oui,0=Non)\t"); 
+    printf("Voulez vous remplir une colonne par vous même ? (1=Oui,0=Non)\t");
     scanf("%d", &reponse); // lecture de la réponse de l'utilisateur
     if (reponse == 1)
-    {}
+    {
         int colonne; // numéro de la colonne à remplir
         printf("Entrez le numéro de la colonne (1 à %d)\t", n);
         scanf("%d", &colonne); // lecture du numéro de la colonne
@@ -157,6 +162,7 @@ void choixtables(int *score)
                 printf("Désolé, la bonne réponse est %d.\n", i * colonne);
             }
         }
+    }
 }
 
 void enregistrerScore(const char *nom, int score) {
@@ -178,44 +184,47 @@ void enregistrerScore(const char *nom, int score) {
     fclose(fichier);
 }
 
+
+
 int main()
 {
     char nom[50]; // tableau pour stocker le nom de l'utilisateur
-    int choix;
+    char choix;
     int score = 0; // initialisation du score
+
 
     printf("Entrez votre nom : ");
     scanf("%s", nom);
 
     afficherMenu();
-    scanf("%d", &choix);
+    scanf("%s", &choix);
 
-    while (choix != 0)
+    while (choix != '0')
     {
         switch (choix)
         {
-            case 1:
+            case '1':
                 addition(&score);
                 break;
-            case 2:
+            case '2':
                 soustraction(&score);
                 break;
-            case 3:
+            case '3':
                 multiplication(&score);
                 break;
-            case 4:
+            case '4':
                 choixtables(&score);
                 break;
-            case 5:
+            case '5':
                 division(&score);
                 break;
             default:
-                printf("Choix invalide. Veuillez réessayer.\n");
+                printf("Choix invalide. Veuillez réessayer.\n\n");
         }
-
         printf("Score actuel : %d\n", score); // affichage du score actuel
         afficherMenu();
-        scanf("%d", &choix);
+        scanf("%s", &choix);
+        printf("");
     }
 
     printf("Merci d'avoir joué ! Votre score final est : %d\n", score); // affichage du score final
