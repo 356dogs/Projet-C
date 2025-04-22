@@ -4,7 +4,7 @@
 
 void afficherMenu()
 {
-    printf("+-----------------------------------+\n|1 : Addition                       |\n|2 : Soustraction                   |\n|3 : Multiplication                 |\n|4 : Tables des multiplications     |\n|5 : Divisions                      |\n|0 : Sortir du jeu                  |\n+-----------------------------------+\nQuel est votre choix ?\t");
+    printf("+-----------------------------------+\n|1 : Addition                       |\n|2 : Soustraction                   |\n|3 : Multiplication                 |\n|4 : Tables des multiplications     |\n|5 : Divisions                      |\n|0 : Sortir du jeu et               |\n|    enregistrer le score           |\n+-----------------------------------+\nQuel est votre choix ?\t");
 }
 
 void gestionreponse(int resultat, int *score)
@@ -165,33 +165,20 @@ void choixtables(int *score)
     }
 }
 
-void enregistrerScore(const char *nom, int score) {
-    FILE *fichier = fopen("score/scores.csv", "a"); // Ouvrir en mode ajout
-    if (fichier == NULL) {
-        printf("Erreur lors de l'ouverture du fichier des scores.\n");
-        return;
+int enregistrerScore() {
+    FILE *fichier = fopen("score.txt","a");
+    if (fichier == NULL){
+        printf("Erreur d'ouverture du fichier.\n");
+        return 0;
     }
-
-    // Obtenir la date et l'heure actuelles
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-
-    // Écrire les informations dans le fichier
-    fprintf(fichier, "Nom: %s | Score: %d | Date: %02d/%02d/%04d %02d:%02d:%02d\n",
-            nom, score, tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
-            tm.tm_hour, tm.tm_min, tm.tm_sec);
-
-    fclose(fichier);
 }
-
-
 
 int main()
 {
     char nom[50]; // tableau pour stocker le nom de l'utilisateur
     char choix;
     int score = 0; // initialisation du score
-
+    int peutquitter; // variable pour savoir si l'utilisateur peut quitter le jeu
 
     printf("Entrez votre nom : ");
     scanf("%s", nom);
@@ -218,6 +205,12 @@ int main()
             case '5':
                 division(&score);
                 break;
+            case '0':
+                printf("Merci d'avoir joué ! Votre score final est : %d\n", score); // affichage du score final
+                peutquitter = enregistrerScore(nom, score); // enregistrement du score dans le fichier
+                if (peutquitter == 1){ //true
+                    return 0;
+                }
             default:
                 printf("Choix invalide. Veuillez réessayer.\n\n");
         }
@@ -226,8 +219,4 @@ int main()
         scanf("%s", &choix);
         printf("");
     }
-
-    printf("Merci d'avoir joué ! Votre score final est : %d\n", score); // affichage du score final
-    enregistrerScore(nom, score); // enregistrement du score dans le fichier
-    return 0;
 }
