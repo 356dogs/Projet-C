@@ -7,6 +7,47 @@ void afficherMenu()
     printf("+-----------------------------------+\n|1 : Addition                       |\n|2 : Soustraction                   |\n|3 : Multiplication                 |\n|4 : Tables des multiplications     |\n|5 : Divisions                      |\n|0 : Sortir du jeu                  |\n+-----------------------------------+\nQuel est votre choix ?\t");
 }
 
+void gestionreponse(int resultat, int *score)
+{
+    int essaie = 3; // 3 essaie
+    int reponse; // réponse de l'utilisateur
+
+    while (essaie > 0)
+    {
+        printf("Entrer le résultat\t");
+        scanf("%d", &reponse);
+        printf("Vous avez entré : %d\n", reponse);
+        if (reponse == resultat)
+        {
+            switch (essaie)
+            {
+                case 3:
+                    printf("Bravo, vous gagnez 10 points!\n\n");
+                    *score += 10; // incrémentation du score
+                    return;
+                case 2:
+                    printf("Bravo ! Vous avez utilisé 2 essais. Vous gagnez donc 5 points.\n\n");
+                    *score += 5; // incrémentation du score
+                    return;
+                case 1:
+                    printf("Bravo ! Vous avez utilisé 3 essai. Vous ne gagnez donc qu'un point.\n\n");
+                    *score += 1; // incrémentation du score
+                    return;
+            }
+        }
+        else
+        {
+            essaie--;
+            if (essaie == 0){
+                printf("Désolé, la bonne réponse est %d.\n\n", resultat);
+            }
+            else{
+                printf("Désolé, ce n'est pas la bonne réponse. Il vous reste %d essais.\n\n", essaie);
+            }
+        }
+    }
+}
+
 void addition(int *score)
 {
     srand(time(NULL));
@@ -16,69 +57,9 @@ void addition(int *score)
     int reponse;
     int essaie = 3; // 3 essaie
 
-    printf("\nAddition :\n%d + %d = ?\nEntrer le résultat\t", a, b);
-    scanf("%d", &reponse);
-    printf("Vous avez entré : %d\n", reponse);
+    printf("\nAddition :\n%d + %d = ?\n", a, b);
 
-    if (reponse == resultat)
-    {
-        printf("Bravo !\n\n");
-        (*score)++; // incrémentation du score
-    }
-    else
-    {
-        essaie--;
-        if essaie ==
-        printf("Désolé, la bonne réponse est %d.\n\n", resultat);
-
-
-    }
-}
-
-void multiplication(int *score)
-{
-    srand(time(NULL));
-    int a = rand() % 10 +1; // nombre aléatoire entre 1 et 10
-    int b = rand() % 10 +1; // nombre aléatoire entre 1 et 10
-    int resultat = a * b;
-    int reponse;
-
-    printf("\nMultiplication :\n%d * %d = ?\nEntrer le résultat\t", a, b);
-    scanf("%d", &reponse);
-    printf("Vous avez entré : %d\n", reponse);
-
-    if (reponse == resultat)
-    {
-        printf("Bravo !\n\n");
-        (*score)++; // incrémentation du score
-    }
-    else
-    {
-        printf("Désolé, la bonne réponse est %d.\n\n", resultat);
-    }
-}
-
-void division(int *score)
-{
-    srand(time(NULL));
-    int a = rand() % 20 + 1; // nombre aléatoire entre 1 et 20
-    int b = rand() % 9 + 2; // nombre aléatoire entre 2 et 10
-    int resultat = a; // le dividende
-    int reponse;
-
-    printf("\nDivision :\n%d / %d = ? (entier uniquement)\nEntrer le résultat\t", a * b, b);
-    scanf("%d", &reponse);
-    printf("Vous avez entré : %d\n", reponse);
-
-    if (reponse == a)
-    {
-        printf("Bravo !\n\n");
-        (*score)++; // incrémentation du score
-    }
-    else
-    {
-        printf("Désolé, la bonne réponse est %d.\n\n", a);
-    }
+    gestionreponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
 }
 
 void soustraction(int *score)
@@ -90,20 +71,39 @@ void soustraction(int *score)
     int min = (a > b) ? b : a;
     int resultat = max - min;
     int reponse;
+    int essaie = 3; // 3 essaie
 
-    printf("\nSoustraction :\n%d - %d = ?\nEntrer le résultat\t", max, min);
-    scanf("%d", &reponse);
-    printf("Vous avez entré : %d\n", reponse);
+    printf("\nSoustraction :\n%d - %d = ?\n", max, min);
 
-    if (reponse == resultat)
-    {
-        printf("Bravo !\n\n");
-        (*score)++; // incrémentation du score
-    }
-    else
-    {
-        printf("Désolé, la bonne réponse est %d.\n\n", resultat);
-    }
+    gestionreponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
+}
+
+void multiplication(int *score)
+{
+    srand(time(NULL));
+    int a = rand() % 10 +1; // nombre aléatoire entre 1 et 10
+    int b = rand() % 10 +1; // nombre aléatoire entre 1 et 10
+    int resultat = a * b;
+    int reponse;
+    int essaie = 3; // 3 essaie
+
+    printf("\nMultiplication :\n%d * %d = ?\n", a, b);
+
+    gestionreponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
+}
+
+void division(int *score)
+{
+    srand(time(NULL));
+    int a = rand() % 20 + 1; // nombre aléatoire entre 1 et 20
+    int b = rand() % 9 + 2; // nombre aléatoire entre 2 et 10
+    int resultat = a; // le dividende
+    int reponse;
+    int essaie = 3; // 3 essaie
+
+    printf("\nDivision :\n%d / %d = ? (entier uniquement)\n", a * b, b);
+
+    gestionreponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
 }
 
 void choixtables(int *score)
