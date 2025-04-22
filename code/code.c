@@ -7,7 +7,7 @@ void afficherMenu()
     printf("+-----------------------------------+\n|1 : Addition                       |\n|2 : Soustraction                   |\n|3 : Multiplication                 |\n|4 : Tables des multiplications     |\n|5 : Divisions                      |\n|0 : Sortir du jeu et               |\n|    enregistrer le score           |\n+-----------------------------------+\nQuel est votre choix ?\t");
 }
 
-void gestionreponse(int resultat, int *score)
+void gestionReponse(int resultat, int *score)
 {
     int essaie = 3; // 3 essaie
     int reponse; // réponse de l'utilisateur
@@ -59,7 +59,7 @@ void addition(int *score)
 
     printf("\nAddition :\n%d + %d = ?\n", a, b);
 
-    gestionreponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
+    gestionReponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
 }
 
 void soustraction(int *score)
@@ -75,7 +75,7 @@ void soustraction(int *score)
 
     printf("\nSoustraction :\n%d - %d = ?\n", max, min);
 
-    gestionreponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
+    gestionReponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
 }
 
 void multiplication(int *score)
@@ -89,7 +89,7 @@ void multiplication(int *score)
 
     printf("\nMultiplication :\n%d * %d = ?\n", a, b);
 
-    gestionreponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
+    gestionReponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
 }
 
 void division(int *score)
@@ -103,12 +103,12 @@ void division(int *score)
 
     printf("\nDivision :\n%d / %d = ? (entier uniquement)\n", a * b, b);
 
-    gestionreponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
+    gestionReponse(resultat, score); // appel de la fonction pour gérer la réponse de l'utilisateur
 }
 
-void choixtables(int *score)
+void choixTables(int *score)
 {
-    int n; // largeur de la table
+    int n; // taille de la table
     int reponse; // réponse de l'utilisateur
 
     printf("Vous avez choisi les tables des multiplications.\nSur quelle table voulez-vous travailler (entrez la valeur maximale. Exemple : 10 pour une table de 1 à 10)\t");
@@ -165,12 +165,31 @@ void choixtables(int *score)
     }
 }
 
+void menuEnregistrement()
+{
+    printf("+-----------------------------------+\n|1 : Enregistrer le score           |\n|2 : Afficher le score              |\n|0 : Quitter                        |\n+-----------------------------------+\nQuel est votre choix ?\t");
+}
+
+void lectureScore()
+{
+    FILE *fichier = fopen("score.txt","r"); // ouverture du fichier en mode lecture
+    if (fichier == NULL){
+        printf("Erreur d'ouverture du fichier.\n");
+        return;
+    }
+
+
+
+}
+
 int enregistrerScore() {
     FILE *fichier = fopen("score.txt","a");
     if (fichier == NULL){
         printf("Erreur d'ouverture du fichier.\n");
         return 0;
     }
+
+
 }
 
 int main()
@@ -184,7 +203,7 @@ int main()
     scanf("%s", nom);
 
     afficherMenu();
-    scanf("%s", &choix);
+    scanf(" %c", &choix);
 
     while (choix != '0')
     {
@@ -200,23 +219,24 @@ int main()
                 multiplication(&score);
                 break;
             case '4':
-                choixtables(&score);
+                choixTables(&score);
                 break;
             case '5':
                 division(&score);
                 break;
             case '0':
                 printf("Merci d'avoir joué ! Votre score final est : %d\n", score); // affichage du score final
-                peutquitter = enregistrerScore(nom, score); // enregistrement du score dans le fichier
+                peutquitter = enregistrerScore(); // enregistrement du score dans le fichier
                 if (peutquitter == 1){ //true
                     return 0;
                 }
             default:
                 printf("Choix invalide. Veuillez réessayer.\n\n");
         }
+        choix = 0;
         printf("Score actuel : %d\n", score); // affichage du score actuel
         afficherMenu();
-        scanf("%s", &choix);
+        scanf(" %c", &choix);
         printf("");
     }
 }
