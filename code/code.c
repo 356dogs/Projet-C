@@ -165,10 +165,41 @@ void choixTables(int *score)
     }
 }
 
-void enregistrerScore(const char *nom, int score) {
-    FILE *fichier = fopen("score/scores.csv", "a"); // Ouvrir en mode ajout
-    if (fichier == NULL) {
-        printf("Erreur lors de l'ouverture du fichier des scores.\n");
+void menuEnregistrement()
+{
+    char choix;
+    char nom[50];
+
+    while (1==1)
+    {
+        printf("Bienvenue dans le jeu Champion des Maths !\n");
+        printf("+-----------------------------------+\n|1 : Se connecter                   |\n|   (avec un nom d'utilisateur)     |\n|2 : ne pas se connecter            |\n+-----------------------------------+\nQuel est votre choix ?\t");
+        scanf(" %c", &choix);
+
+        while (getchar() != '\n');
+
+        switch (choix)
+        {
+            case '1':
+                printf("Entrez votre nom d'utilisateur :\t");
+                scanf("%s", nom); // lecture du nom d'utilisateur
+                return; // sortie de la fonction
+            case '2':
+                printf("Entrez votre nom d'utilisateur : (ce nom doit être unique)\t");
+                scanf("%s", nom); // lecture du nom d'utilisateur
+                return; // sortie de la fonction
+            default:
+                printf("Choix invalide. Veuillez réessayer.\n");
+        }
+        
+    }
+}
+
+void lectureScore()
+{
+    FILE *fichier = fopen("score.txt","r"); // ouverture du fichier en mode lecture
+    if (fichier == NULL){
+        printf("Erreur d'ouverture du fichier.\n");
         return;
     }
 
