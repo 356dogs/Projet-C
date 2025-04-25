@@ -352,10 +352,10 @@ int main()
                 printf("Merci d'avoir joué %s ! Votre score final est : %d\n", nom, score);
                 if (enregistrerScore(nom, score,lignejoueur)) {
                     printf("Score enregistré avec succès !\n");
-                    return 0;
+                    return 1;
                 } else {
                     printf("Erreur lors de l'enregistrement du score.\n");
-                    return 1;
+                    return -1;
                 }
             default:
                 printf("Choix invalide. Veuillez réessayer.\n\n");
